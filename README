@@ -1,0 +1,49 @@
+moonwalk.lua
+
+a fennel wrapper to make neovim support fennel language
+
+USAGE:
+  moonwalk.lua {help|version|update}
+
+  subcommands:
+    help                    - print the help message
+                              (DEFAULT)
+    version                 - print the current fennel version
+    update                  - install or update fennel to the latest version.
+                              it will be installed at
+                              "stdpath('data')/site/pack/moonwalk/start/moonwalk/lua/fennel.lua"
+
+VARIABLES:
+  g:moonwalk_dir            - the directory for search fennel code
+                              (DEFAULT: stdpath('config'))
+  g:moonwalk_subdirs        - the fennel code in this directories that under
+                              `g:moonwalk_dir` will compiled to lua code.
+                              (DEFAULT: ['plugin', 'indent', 'ftplugin', 'colors'])
+  g:moonwalk_compiled_dir   - the directory that stored compiled lua files.
+                              the path is in runtimepath or packpath usually.
+                              (DEFAULT: "stdconfig('data')/site")
+  g:moonwalk_dir_alias      - the alias for `g:moonwalk_dir` is used for handle symlink
+                              (DEFAULT: [stdpath('config'), '~/.config/nvim'])
+
+  g:moonwalk_hooks          - the functions(events) that will called while compile time
+                              TYPE: map[string, function]
+                              EVENTS:
+                                `precompile` string->string (DEFAULT: { src -> src })
+                                `postcompile` string->string (DEFAULT: { src -> src })
+                                `ignorecompile` nil->string[] (DEFAULT: { -> [] })
+                              NOTE:
+                                This variable could not assigned with vimscript function,
+                                it only can assigned with `lua` command.
+
+COMMANDS:
+  Moonwalk                  - compile all fennel files to lua
+  MoonwalkClean             - clean all compiled lua files
+
+ AUTOCMDS:
+   BufWritePost               compile written fennel file in config path
+   SourceCmd                  execute the fennel with source command
+
+REFERENCE:
+  https://github.com/gpanders/nvim-moonwalk
+  https://github.com/gpanders/dotfiles/blob/master/.config/nvim/lua/moonwalk.lua
+
